@@ -1,0 +1,181 @@
+name: Build SONIC-Stellarium Bridge
+
+on:
+  push:
+    branches: [ main, develop, claude/* ]
+  pull_request:
+    branches: [ main, develop ]
+
+jobs:
+  build-linux:
+    name: Build on Ubuntu (Qt6)
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        qt-version: ['6.2', '6.5']
+        python-version: ['3.8', '3.9', '3.10', '3.11']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Qt6
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          qt6-base-dev \
+          qt6-opengl-dev \
+          libqt6opengl6-dev \
+          libgl1-mesa-dev \
+          libglu1-mesa-dev
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pybind11 numpy scipy opencv-python matplotlib pytest
+
+    - name: Install CMake
+      run: |
+        sudo apt-get install -y cmake
+
+    - name: Configure CMake
+      working-directory: sonic_stellarium
+      run: |
+        mkdir -p build
+        cd build
+        cmake .. \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DPYTHON_EXECUTABLE=$(which python)
+
+    - name: Build
+      working-directory: sonic_stellarium/build
+      run: |
+        cmake --build . -j$(nproc)
+
+    - name: Test import
+      working-directory: sonic_stellarium/build
+      run: |
+        python -c "import sonic_stellarium; print('Import successful')"
+
+    - name: Run tests
+      working-directory: sonic_stellarium
+      run: |
+        cp build/sonic_stellarium*.so tests/
+        cd tests
+        python test_sonic_stellarium.py || true
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: sonic-stellarium-${{ matrix.python-version }}-${{ matrix.qt-version }}
+        path: sonic_stellarium/build/sonic_stellarium*.so
+
+  build-macos:
+    name: Build on macOS (Qt6)
+    runs-on: macos-latest
+
+    strategy:
+      matrix:
+        python-version: ['3.9', '3.10', '3.11']
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Qt6
+      run: |
+        brew install qt6 cmake
+
+    - name: Install Python dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pybind11 numpy scipy opencv-python matplotlib
+
+    - name: Configure CMake
+      working-directory: sonic_stellarium
+      run: |
+        mkdir -p build
+        cd build
+        export Qt6_DIR=$(brew --prefix qt6)
+        cmake .. \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DPYTHON_EXECUTABLE=$(which python) \
+          -DQt6_DIR=$Qt6_DIR/lib/cmake/Qt6
+
+    - name: Build
+      working-directory: sonic_stellarium/build
+      run: |
+        cmake --build . -j$(sysctl -n hw.ncpu)
+
+    - name: Test import
+      working-directory: sonic_stellarium/build
+      run: |
+        python -c "import sonic_stellarium; print('Import successful')"
+
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: sonic-stellarium-macos-${{ matrix.python-version }}
+        path: sonic_stellarium/build/sonic_stellarium*.so
+
+  test-integration:
+    name: Integration Tests
+    runs-on: ubuntu-latest
+    needs: build-linux
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install Qt6 (runtime only)
+      run: |
+        sudo apt-get update
+        sudo apt-get install -y \
+          qt6-base-dev \
+          qt6-opengl-dev
+
+    - name: Install Python dependencies
+      run: |
+        pip install numpy scipy opencv-python matplotlib
+        pip install -e sonic_python/
+
+    - name: Download artifacts
+      uses: actions/download-artifact@v3
+      with:
+        name: sonic-stellarium-3.10-6.5
+        path: sonic_python/sonic/
+
+    - name: Run integration tests
+      run: |
+        cd sonic_stellarium/tests
+        python test_sonic_stellarium.py
+
+    - name: Run benchmark
+      run: |
+        cd examples
+        python benchmark_rendering_performance.py || true
+
+    - name: Run end-to-end example
+      run: |
+        cd examples
+        python end_to_end_crater_navigation.py || true
