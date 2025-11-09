@@ -183,11 +183,18 @@ private:
     std::unique_ptr<QOpenGLFramebufferObject> fbo_;
     std::unique_ptr<QOpenGLContext> context_;
 
-    // Stellarium components (would link to actual Stellarium classes)
-    // StelApp* stellApp_;
-    // StelCore* stellCore_;
-    void* stellApp_;   // Placeholder
-    void* stellCore_;  // Placeholder
+    // Minimal view state (simulates Stellarium state)
+    struct ViewState {
+        double fov = 1.0;           // Field of view in degrees
+        double azimuth = 0.0;       // View direction azimuth
+        double altitude = 45.0;     // View direction altitude
+        double jd = 2451545.0;      // Julian day (J2000.0)
+        double obsLat = 0.0;        // Observer latitude
+        double obsLon = 0.0;        // Observer longitude
+        double obsAlt = 0.0;        // Observer altitude (m)
+        bool moonFocused = false;   // Moon in view
+        double moonPhase = 0.5;     // Moon phase (0-1)
+    } viewState_;
 
     // Framebuffer info
     int width_;
@@ -199,8 +206,9 @@ private:
 
     // Internal helpers
     void setupOpenGL();
-    void initializeStellariumCore();
-    void updateStellariumState();
+    void renderSyntheticMoon(QPainter& painter);
+    void renderCraters(QPainter& painter, int count);
+    void renderStarField(QPainter& painter);
 };
 
 } // namespace sonic
