@@ -24,7 +24,25 @@ For **API documentation**, please visit [https://opnavlab.github.io/sonic/](http
 # Getting Started
 Minimal preparation is needed to begin using SONIC. Simply follow these steps:
 1. Clone the repository locally.
-2. Download the .mat data files from [this link](https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0) and place them in the +sonic/+data folder within your local repository.
+2. Download the required data files:
+   - **Option A (Recommended):** Run the provided download helper script:
+     ```bash
+     # Using Python
+     python3 download_data.py
+     
+     # OR using Bash
+     ./download_data.sh
+     ```
+     The script will check for existing files and provide instructions for downloading missing data files.
+   
+   - **Option B (Manual):** Download the .mat data files from [this link](https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0) and place them in the `+sonic/+data` folder within your local repository.
+   
+   Required data files:
+   - `hipparcos.mat` - Hipparcos star catalog
+   - `usnognc.mat` - US Naval Observatory GNC catalog
+   - `robbins.mat` - Robbins lunar crater catalog
+   - `constellations.mat` - IAU constellation boundaries
+
 3. Add the sonic directory to the search path that you're working in (i.e. using addpath). 
 
 A few MATLAB live tutorials are provided under [+examples](https://github.com/opnavlab/sonic/tree/main/%2Bexamples)
