@@ -105,11 +105,13 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             [obj_mult, obj_single] = ...
                 sonic.MeetJoinable.verifyOneObjWithMultipleN(pt1, pt2);
       
-            % Need to iterate over the object with multiple entries:
-            lines = zeros(3, obj_mult.n);
-            for idx = 1:obj_mult.n
-                lines(:, idx) = cross(obj_mult.p2(:, idx), obj_single.p2);
-            end
+            % Vectorized cross product computation for 3D homogeneous coordinates
+            % cross([a1;a2;a3], [b1;b2;b3]) = [a2*b3-a3*b2; a3*b1-a1*b3; a1*b2-a2*b1]
+            a = obj_mult.p2;
+            b = obj_single.p2;
+            lines = [a(2,:).*b(3) - a(3,:).*b(2);
+                     a(3,:).*b(1) - a(1,:).*b(3);
+                     a(1,:).*b(2) - a(2,:).*b(1)];
             % Package back into a single Lines2 object:
             line = sonic.Lines2(lines);
 
@@ -138,11 +140,8 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             [obj_mult, obj_single] = ...
                 sonic.MeetJoinable.verifyOneObjWithMultipleN(pt, line);
        
-            % Need to iterate over the object with multiple entries:
-            val = zeros(1, obj_mult.n);
-            for idx = 1:obj_mult.n
-                val(idx) = obj_mult.p2(:, idx)'*obj_single.p2;
-            end
+            % Vectorized dot product computation
+            val = sum(obj_mult.p2 .* obj_single.p2, 1);
 
         end
 
@@ -172,11 +171,12 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             [obj_mult, obj_single] = ...
                 sonic.MeetJoinable.verifyOneObjWithMultipleN(line1, line2);
         
-            % Need to iterate over the object with multiple entries:
-            pts = zeros(3, obj_mult.n);
-            for idx = 1:obj_mult.n
-                pts(:, idx) = cross(obj_mult.p2(:, idx), obj_single.p2);
-            end
+            % Vectorized cross product computation
+            a = obj_mult.p2;
+            b = obj_single.p2;
+            pts = [a(2,:).*b(3) - a(3,:).*b(2);
+                   a(3,:).*b(1) - a(1,:).*b(3);
+                   a(1,:).*b(2) - a(2,:).*b(1)];
             % Package back into a single Points2 object:
             pt = sonic.Points2(pts);
 
@@ -205,11 +205,8 @@ classdef (Abstract) GeometryP2 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             [obj_mult, obj_single] = ...
                 sonic.MeetJoinable.verifyOneObjWithMultipleN(pt, line);
 
-            % Need to iterate over the object with multiple entries:
-            val = zeros(1, obj_mult.n);
-            for idx = 1:obj_mult.n
-                val(idx) = obj_mult.p2(:, idx)'*obj_single.p2;
-            end
+            % Vectorized dot product computation
+            val = sum(obj_mult.p2 .* obj_single.p2, 1);
 
         end
 

@@ -604,7 +604,7 @@ classdef Math
         % cutoff is determined (summation in Eq. 14.1 in [1])
         if any(belowConvergenceCutOff)
             belowConvergenceSummation = sum(...
-                ((repmat(muBelowCutOff,1,nSeriesTerms+1).^constantSeriesTerms)...
+                ((muBelowCutOff.^constantSeriesTerms)...
                 ./((constantSeriesTerms).^2)),2);
         
         % The full expression defined in Eq. 14.1 in [1] is evaluated for all 
@@ -619,8 +619,8 @@ classdef Math
         % cutoff is determined (summation in Eq. 14.2 in [2])
         if any(~belowConvergenceCutOff)
             aboveConvergenceSummation = sum(((1./(constantSeriesTerms.^2)).*...
-                ((1-(repmat(muAboveCutOff,1,nSeriesTerms+1)))./...
-                (1+(repmat(muAboveCutOff,1,nSeriesTerms+1)))).^constantSeriesTerms),2);
+                ((1-muAboveCutOff)./...
+                (1+muAboveCutOff)).^constantSeriesTerms),2);
 
         % The full expression defined in Eq. 14.2 in [1] is evaluated for all 
         % (var,AL_ss) pairs above the convergence cutoff
