@@ -230,17 +230,13 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             [obj_mult, obj_single] = ...
                 sonic.MeetJoinable.verifyOneObjWithMultipleN(line1, line2);
     
-            % Need to iterate over the object with multiple entries.
-            val = zeros(1, obj_mult.n);
+            % Vectorized computation of mutual Plücker-Grassmann constraint
+            % Boils down to u_A'*m_B + u_B'*m_A. That is, a mutual
+            % evaluation of the Plücker-Grassmann constraint. If they're
+            % the same line, this will be zero. 
+            A = obj_mult.plucker;
             B = obj_single.plucker;
-            for idx = 1:obj_mult.n
-                A = obj_mult.plucker(:, idx);
-
-                % Boils down to u_A'*m_B + u_B'*m_A. That is, a mutual
-                % evaluation of the Plucker-Grassman constraint. If they're
-                % the same time, this will be zero. 
-                val(idx) = A(3)*B(4) + A(4)*B(3) + A(5)*B(2) + A(2)*B(5) + A(6)*B(1) + A(1)*B(6);
-            end
+            val = A(3,:).*B(4) + A(4,:).*B(3) + A(5,:).*B(2) + A(2,:).*B(5) + A(6,:).*B(1) + A(1,:).*B(6);
         end
 
     end
@@ -381,17 +377,13 @@ classdef (Abstract) GeometryP3 < sonic.MeetJoinable & matlab.mixin.Heterogeneous
             [obj_mult, obj_single] = ...
                 sonic.MeetJoinable.verifyOneObjWithMultipleN(line1, line2);
     
-            % Need to iterate over the object with multiple entries.
-            val = zeros(1, obj_mult.n);
+            % Vectorized computation of mutual Plücker-Grassmann constraint
+            % Boils down to u_A'*m_B + u_B'*m_A. That is, a mutual
+            % evaluation of the Plücker-Grassmann constraint. If they're
+            % the same line, this will be zero. 
+            A = obj_mult.plucker;
             B = obj_single.plucker;
-            for idx = 1:obj_mult.n
-                A = obj_mult.plucker(:, idx);
-
-                % Boils down to u_A'*m_B + u_B'*m_A. That is, a mutual
-                % evaluation of the Plucker-Grassman constraint. If they're
-                % the same time, this will be zero. 
-                val(idx) = A(3)*B(4) + A(4)*B(3) + A(5)*B(2) + A(2)*B(5) + A(6)*B(1) + A(1)*B(6);
-            end
+            val = A(3,:).*B(4) + A(4,:).*B(3) + A(5,:).*B(2) + A(2,:).*B(5) + A(6,:).*B(1) + A(1,:).*B(6);
         end
 
     end

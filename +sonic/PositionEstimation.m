@@ -83,7 +83,7 @@ classdef PositionEstimation
             end
 
             if isscalar(cov_x)
-                cov_x = repmat(cov_x, 1, n_meas);
+                cov_x = cov_x .* ones(1, n_meas);
             end
 
             % preallocation to speed-up code
