@@ -22,15 +22,45 @@ For **API documentation**, please visit [https://opnavlab.github.io/sonic/](http
 [![DOI](https://joss.theoj.org/papers/10.21105/joss.06916/status.svg)](https://doi.org/10.21105/joss.06916)
 
 # Getting Started
+
+> **Quick Start:** See [QUICKSTART.md](QUICKSTART.md) for a streamlined setup guide.
+
 Minimal preparation is needed to begin using SONIC. Simply follow these steps:
 1. Clone the repository locally.
-2. Download the .mat data files from [this link](https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0) and place them in the +sonic/+data folder within your local repository.
+2. Download the required data files:
+   
+   > **⚠️ NOTE:** The Box shared folder link is currently unavailable. Please contact the repository maintainers for access to the data files, or see the [DOWNLOAD_DATA.md](DOWNLOAD_DATA.md) guide for information about the original data sources.
+   
+   - **Option A (Recommended):** Run the provided download helper script:
+     ```bash
+     # Using Python
+     python3 download_data.py
+     
+     # OR using Bash
+     ./download_data.sh
+     ```
+     The script will check for existing files and provide instructions for obtaining the data files.
+   
+   - **Option B (Manual):** If you have access to the data files, place the .mat files in the `+sonic/+data` folder within your local repository.
+   
+   Required data files:
+   - `hipparcos.mat` - Hipparcos star catalog
+   - `usnognc.mat` - US Naval Observatory GNC catalog
+   - `robbins.mat` - Robbins lunar crater catalog
+   - `constellations.mat` - IAU constellation boundaries
+
 3. Add the sonic directory to the search path that you're working in (i.e. using addpath). 
+
+4. **Verify your installation** by running the verification script in MATLAB:
+   ```matlab
+   verify_installation
+   ```
+   This will check that all data files are present and the catalogs can be loaded correctly.
 
 A few MATLAB live tutorials are provided under [+examples](https://github.com/opnavlab/sonic/tree/main/%2Bexamples)
 for demonstrative purposes.
 
-To verify your installation of SONIC, please run these examples locally and compare the outputs to the pre-run demos in the SONIC API documentation, linked below.
+To further verify your installation of SONIC, please run these examples locally and compare the outputs to the pre-run demos in the SONIC API documentation, linked below.
 
 Note: SONIC requires the following MATLAB toolboxes installed:
 - Image Processing Toolbox version 24.1
