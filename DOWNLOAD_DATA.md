@@ -1,6 +1,8 @@
 # SONIC Data Files Setup Guide
 
-This guide explains how to download and set up the required data files for SONIC.
+> **⚠️ IMPORTANT:** The Box shared folder link for downloading preprocessed data files is currently unavailable. Please contact the repository maintainers at https://github.com/opnavlab/sonic for access to the data files. Alternatively, see the "Reconstructing Data Files from Original Sources" section below.
+
+This guide explains how to set up the required data files for SONIC.
 
 ## Overview
 
@@ -37,13 +39,17 @@ These scripts will:
 - Provide direct instructions for downloading them
 - Verify successful installation
 
-### Method 2: Manual Download
+### Method 2: Manual Download (Currently Unavailable)
 
-1. **Download the data files:**
+> **⚠️ NOTE:** The Box download link is currently unavailable. Please contact the repository maintainers for access to the data files.
+
+1. **Obtain the data files:**
    
-   Visit the Box shared folder: https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0
+   ~~Visit the Box shared folder: https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0~~
    
-   Download all four `.mat` files:
+   **Alternative:** Contact the repository maintainers at https://github.com/opnavlab/sonic/issues to request access to the preprocessed `.mat` files.
+   
+   Required files:
    - `hipparcos.mat`
    - `usnognc.mat`
    - `robbins.mat`
@@ -137,6 +143,35 @@ If the download scripts report missing files after you've downloaded them:
 - **Size:** ~100 KB
 - **Contents:** IAU constellation boundary definitions as spherical polygons
 - **Constellations:** 89 entries (88 constellations, Serpens split into two parts)
+
+## Reconstructing Data Files from Original Sources
+
+If the preprocessed `.mat` files are unavailable, advanced users can reconstruct them from the original data sources listed below. Note that this requires understanding of MATLAB and the SONIC data format.
+
+### Original Data Sources
+
+1. **Hipparcos Star Catalog**
+   - Source: https://www.cosmos.esa.int/web/hipparcos/interactive-data-access
+   - SONIC provides `sonic.Hipparcos.parseData()` method to process raw Hipparcos data
+   - Also requires Bayer designation lookup table
+
+2. **US Naval Observatory GNC Catalog**
+   - Source: https://crf.usno.navy.mil/icrs
+   - Contains star positions, proper motions, and photometric data
+   - Requires parsing and conversion to SONIC format
+
+3. **Robbins Lunar Crater Catalog**
+   - Source: https://astrogeology.usgs.gov/search/map/moon_crater_database_v1_robbins
+   - Download the crater database CSV file
+   - SONIC preprocesses this data to include geometric information (disk quadrics, conics, etc.)
+   - Significant processing required to generate the full SONIC format
+
+4. **IAU Constellation Boundaries**
+   - Source: IAU constellation boundary text files
+   - Use `sonic.StarCatalog.parseConstellationFiles()` to process raw boundary files
+   - Generates constellation polygon definitions
+
+**Note:** Reconstructing these files requires significant effort and familiarity with the SONIC codebase. It is recommended to contact the maintainers for access to the preprocessed files instead.
 
 ## Additional Resources
 

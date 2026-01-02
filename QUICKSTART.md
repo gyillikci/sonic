@@ -1,6 +1,8 @@
 # SONIC Quick Start Guide
 
-This guide will help you get SONIC up and running in just a few minutes.
+> **⚠️ IMPORTANT:** The Box shared folder link for data files is currently unavailable. Please contact the repository maintainers at https://github.com/opnavlab/sonic/issues for access to the required data files.
+
+This guide will help you get SONIC up and running.
 
 ## Prerequisites
 
@@ -19,7 +21,9 @@ git clone https://github.com/opnavlab/sonic.git
 cd sonic
 ```
 
-### 2. Download Data Files
+### 2. Obtain Data Files
+
+> **⚠️ NOTE:** The Box download link is currently unavailable. Contact the maintainers for access.
 
 **Option A: Using the helper script (recommended)**
 
@@ -31,13 +35,19 @@ python3 download_data.py
 ./download_data.sh
 ```
 
-Follow the on-screen instructions to download the required data files from Box.
+The script will check for missing files and provide instructions for obtaining them.
 
-**Option B: Manual download**
+**Option B: Contact maintainers**
 
-1. Visit: https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0
-2. Download all four `.mat` files
-3. Place them in `+sonic/+data/` directory
+1. Open an issue at: https://github.com/opnavlab/sonic/issues
+2. Request access to the four required `.mat` files
+3. Once obtained, place them in `+sonic/+data/` directory
+
+Required files:
+- `hipparcos.mat`
+- `usnognc.mat`
+- `robbins.mat`
+- `constellations.mat`
 
 ### 3. Verify Installation
 
@@ -95,17 +105,18 @@ open +examples/SyntheticStarImgTutorial.mlx
 
 If you get errors about missing `.mat` files:
 
-1. Ensure you've downloaded all files from the Box link
-2. Verify files are in `+sonic/+data/` directory
-3. Run `verify_installation` in MATLAB to check
+1. Contact the repository maintainers at https://github.com/opnavlab/sonic/issues
+2. Request access to the preprocessed data files
+3. Once obtained, place files in `+sonic/+data/` directory
+4. Run `verify_installation` in MATLAB to check
 
-### Cannot access Box.com
+### Box link unavailable
 
-If you cannot access the Box link:
+The Box shared folder link is currently unavailable. Please:
 
-- Try from a different network
-- Contact the SONIC maintainers for alternative download options
-- See `DOWNLOAD_DATA.md` for more information
+- Contact the SONIC maintainers at https://github.com/opnavlab/sonic/issues
+- Request access to the required data files
+- See `DOWNLOAD_DATA.md` for information about reconstructing from original sources (advanced)
 
 ### MATLAB toolbox errors
 

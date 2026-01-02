@@ -57,34 +57,33 @@ if [ "$all_exist" = true ]; then
 fi
 
 # Instructions for manual download
-echo -e "${YELLOW}Manual Download Required${NC}"
+echo -e "${YELLOW}Data Files Required${NC}"
 echo ""
-echo "Some or all data files are missing. Please follow these steps:"
+echo "Some or all data files are missing."
 echo ""
-echo "1. Visit the Box link in your browser:"
-echo "   $BOX_LINK"
+echo -e "${RED}⚠️  IMPORTANT:${NC} The Box download link is currently unavailable."
 echo ""
-echo "2. Download the following files:"
+echo "Missing files:"
 for file in "${DATA_FILES[@]}"; do
-    echo "   - $file"
+    if ! check_file "$file" &>/dev/null; then
+        echo "   - $file"
+    fi
 done
 echo ""
-echo "3. Place all downloaded .mat files in the directory:"
+echo "To obtain these files:"
+echo ""
+echo "1. Contact the repository maintainers:"
+echo "   https://github.com/opnavlab/sonic/issues"
+echo ""
+echo "2. Request access to the preprocessed data files"
+echo ""
+echo "3. Once obtained, place all .mat files in the directory:"
 echo "   $(pwd)/$DATA_DIR"
 echo ""
 echo "4. Run this script again to verify the installation"
 echo ""
-
-# Try automated download with wget if available
-if command -v wget &> /dev/null; then
-    echo -e "${YELLOW}Attempting automated download with wget...${NC}"
-    echo ""
-    
-    # Note: This requires the direct download URLs which may need to be updated
-    # Box.com typically requires interactive download or API access
-    echo "Note: Automated download from Box may not work due to authentication requirements."
-    echo "If automatic download fails, please use the manual method described above."
-    echo ""
-fi
+echo -e "${YELLOW}Alternative:${NC} See DOWNLOAD_DATA.md for information about"
+echo "reconstructing data files from original sources (advanced users)."
+echo ""
 
 exit 1

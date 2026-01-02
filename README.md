@@ -28,6 +28,9 @@ For **API documentation**, please visit [https://opnavlab.github.io/sonic/](http
 Minimal preparation is needed to begin using SONIC. Simply follow these steps:
 1. Clone the repository locally.
 2. Download the required data files:
+   
+   > **⚠️ NOTE:** The Box shared folder link is currently unavailable. Please contact the repository maintainers for access to the data files, or see the [DOWNLOAD_DATA.md](DOWNLOAD_DATA.md) guide for information about the original data sources.
+   
    - **Option A (Recommended):** Run the provided download helper script:
      ```bash
      # Using Python
@@ -36,9 +39,9 @@ Minimal preparation is needed to begin using SONIC. Simply follow these steps:
      # OR using Bash
      ./download_data.sh
      ```
-     The script will check for existing files and provide instructions for downloading missing data files.
+     The script will check for existing files and provide instructions for obtaining the data files.
    
-   - **Option B (Manual):** Download the .mat data files from [this link](https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0) and place them in the `+sonic/+data` folder within your local repository.
+   - **Option B (Manual):** If you have access to the data files, place the .mat files in the `+sonic/+data` folder within your local repository.
    
    Required data files:
    - `hipparcos.mat` - Hipparcos star catalog

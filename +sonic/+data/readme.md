@@ -1,6 +1,8 @@
 # Data Files Required
 
-Download the .mat data files from the link provided in the top-level SONIC README.md, and place them in the +sonic/+data folder within your local repository. 
+> **⚠️ IMPORTANT:** The Box shared folder link is currently unavailable. Please contact the repository maintainers at https://github.com/opnavlab/sonic/issues for access to the data files.
+
+Download the .mat data files and place them in the +sonic/+data folder within your local repository. 
 
 ## Quick Setup
 
@@ -28,7 +30,9 @@ These .mat files to be placed in +sonic/+data contain catalog data for use with 
 
 ## Download Location
 
-All data files are available at: https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0
+~~All data files are available at: https://gatech.box.com/s/24ntu8h8ty0v8nyxplhl94ck39q7wtc0~~
+
+**The Box link is currently unavailable.** Please contact the repository maintainers at https://github.com/opnavlab/sonic/issues to request access to the preprocessed data files.
 
 For detailed setup instructions, see the DOWNLOAD_DATA.md file in the SONIC root directory.
 

@@ -74,21 +74,30 @@ def check_existing_files():
 
 def print_manual_instructions(missing_files):
     """Print instructions for manual download"""
-    print(f"{Colors.YELLOW}Manual Download Required{Colors.NC}")
+    print(f"{Colors.YELLOW}Data Files Required{Colors.NC}")
     print()
-    print("Some or all data files are missing. Please follow these steps:")
+    print("Some or all data files are missing.")
     print()
-    print("1. Visit the Box link in your browser:")
-    print(f"   {BOX_SHARED_LINK}")
+    print(f"{Colors.RED}⚠️  IMPORTANT:{Colors.NC} The Box download link is currently unavailable.")
     print()
-    print("2. Download the following files:")
+    print("Missing files:")
     for filename in missing_files:
         print(f"   - {filename}")
     print()
-    print("3. Place all downloaded .mat files in the directory:")
+    print("To obtain these files:")
+    print()
+    print("1. Contact the repository maintainers:")
+    print(f"   https://github.com/opnavlab/sonic/issues")
+    print()
+    print("2. Request access to the preprocessed data files")
+    print()
+    print("3. Once obtained, place all .mat files in the directory:")
     print(f"   {Path.cwd() / DATA_DIR}")
     print()
     print("4. Run this script again to verify the installation")
+    print()
+    print(f"{Colors.BLUE}Alternative:{Colors.NC} See DOWNLOAD_DATA.md for information about")
+    print("reconstructing data files from original sources (advanced users).")
     print()
 
 def attempt_download(filename):
@@ -119,12 +128,6 @@ def main():
     
     # Provide manual download instructions
     print_manual_instructions(missing)
-    
-    # Note about automated download
-    print(f"{Colors.BLUE}Note:{Colors.NC} Automated download from Box.com requires")
-    print("authentication and may not be available. Please use the manual")
-    print("download method described above.")
-    print()
     
     return 1
 
