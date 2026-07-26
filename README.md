@@ -30,6 +30,15 @@ Minimal preparation is needed to begin using SONIC. Simply follow these steps:
 A few MATLAB live tutorials are provided under [+examples](https://github.com/opnavlab/sonic/tree/main/%2Bexamples)
 for demonstrative purposes.
 
+## Python port
+
+A Python port of SONIC's OPNAV / star-tracker core (the image → RA/Dec
+plate-solving pipeline and its projective-geometry foundations) lives under
+[`python/`](python/). Class names and semantics mirror the MATLAB `+sonic`
+package; `numpy` is the only hard dependency. See [`python/README.md`](python/README.md)
+for the ported subset, faithfulness notes, and a parity test suite
+(`python3 python/tests/test_sonic.py`).
+
 To verify your installation of SONIC, please run these examples locally and compare the outputs to the pre-run demos in the SONIC API documentation, linked below.
 
 Note: SONIC requires the following MATLAB toolboxes installed:

@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sonic-opnav"
+version = "0.1.0"
+description = "Python port of the OPNAV / star-tracker core of the SONIC MATLAB toolkit"
+readme = "README.md"
+requires-python = ">=3.9"
+license = { text = "MIT" }
+dependencies = ["numpy>=1.21"]
+
+[project.optional-dependencies]
+centroid = ["scipy>=1.7"]           # or opencv-python, for connected components
+catalog = ["scipy>=1.7", "astroquery>=0.4"]
+test = ["pytest>=7"]
+
+[tool.setuptools]
+packages = ["sonic"]
